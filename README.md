@@ -19,5 +19,5 @@ The time we greeted you.
 ```yaml
 uses: actions/hello-world-docker-action@main
 with:
-  who-to-greet: 'Mona the Octocat'
+  who-to-greet: 'Mona the Octocat
 ```
