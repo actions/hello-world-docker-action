@@ -21,4 +21,3 @@ uses: actions/hello-world-docker-action@main
 with:
   who-to-greet: 'Mona the Octocat
 ```
-Updated
