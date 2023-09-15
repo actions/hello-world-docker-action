@@ -1,23 +1,95 @@
-# Hello world docker action
+# Hello, World! Docker Action
 
-This action prints "Hello World" to the log or "Hello" + the name of a person to greet. To learn how this action was built, see "[Creating a Docker container action](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action)" in the GitHub Docs.
+[![GitHub Super-Linter](https://github.com/actions/hello-world-docker-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
+![CI](https://github.com/actions/hello-world-docker-action/actions/workflows/ci.yml/badge.svg)
+
+This action prints `Hello, World!` or `Hello, <who-to-greet>!` to the log. To
+learn how this action was built, see
+[Creating a Docker container action](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action).
+
+## Usage
+
+Here's an example of how to use this action in a workflow file:
+
+```yaml
+name: Example Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      who-to-greet:
+        description: Who to greet in the log
+        required: true
+        default: 'World'
+        type: string
+
+jobs:
+  say-hello:
+    name: Say Hello
+    runs-on: ubuntu-latest
+
+    steps:
+      # Change @main to a specific commit SHA or version tag, e.g.:
+      # actions/hello-world-docker-action@e76147da8e5c81eaf017dede5645551d4b94427b
+      # actions/hello-world-docker-action@v1.2.3
+      - name: Print to Log
+        id: print-to-log
+        uses: actions/hello-world-docker-action@main
+        with:
+          who-to-greet: ${{ inputs.who-to-greet }}
+```
+
+For example workflow runs, check out the
+[Actions tab](https://github.com/actions/hello-world-docker-action/actions)!
+:rocket:
 
 ## Inputs
 
-### `who-to-greet`
-
-**Required** The name of the person to greet. Default `"World"`.
+| Input          | Default | Description                     |
+| -------------- | ------- | ------------------------------- |
+| `who-to-greet` | `World` | The name of the person to greet |
 
 ## Outputs
 
-### `time`
+| Output | Description             |
+| ------ | ----------------------- |
+| `time` | The time we greeted you |
 
-The time we greeted you.
+## Test Locally
 
-## Example usage
+After you've cloned the repository to your local machine or codespace, you'll
+need to perform some initial setup steps before you can test your action.
 
-```yaml
-uses: actions/hello-world-docker-action@main
-with:
-  who-to-greet: 'Mona the Octocat'
-```
+> [!NOTE]
+>
+> You'll need to have a reasonably modern version of
+> [Docker](https://www.docker.com/get-started/) handy (e.g. docker engine
+> version 20 or later).
+
+1. :hammer_and_wrench: Build the container
+
+   Make sure to replace `actions/hello-world-docker-action` with an appropriate
+   label for your container.
+
+   ```bash
+   docker build -t actions/hello-world-docker-action .
+   ```
+
+1. :white_check_mark: Test the container
+
+   You can pass individual environment variables using the `--env` or `-e` flag.
+
+   ```bash
+   $ docker run --env INPUT_WHO_TO_GREET="Mona Lisa Octocat" actions/hello-world-docker-action
+   ::notice file=entrypoint.sh,line=7::Hello, Mona Lisa Octocat!
+   ```
+
+   Or you can pass a file with environment variables using `--env-file`.
+
+   ```bash
+   $ cat ./.env.test
+   INPUT_WHO_TO_GREET="Mona Lisa Octocat"
+
+   $ docker run --env-file ./.env.test actions/hello-world-docker-action
+   ::notice file=entrypoint.sh,line=7::Hello, Mona Lisa Octocat!
+   ```
