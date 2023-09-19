@@ -87,8 +87,7 @@ need to perform some initial setup steps before you can test your action.
    Or you can pass a file with environment variables using `--env-file`.
 
    ```bash
-   $ cat ./.env.test
-   INPUT_WHO_TO_GREET="Mona Lisa Octocat"
+   $ echo "INPUT_WHO_TO_GREET=\"Mona Lisa Octocat\"" > ./.env.test
 
    $ docker run --env-file ./.env.test actions/hello-world-docker-action
    ::notice file=entrypoint.sh,line=7::Hello, Mona Lisa Octocat!
