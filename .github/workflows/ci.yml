@@ -2,11 +2,12 @@ name: Continuous Integration
 
 on:
   pull_request:
+  push:
     branches:
       - main
-  push:
-    branches-ignore:
-      - main
+
+permissions:
+  contents: read
 
 jobs:
   test-docker:
