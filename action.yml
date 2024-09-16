@@ -2,7 +2,8 @@ name: Hello, World!
 description: Greet someone and record the time
 author: GitHub Actions
 
-# Define your inputs here.
+# Define your inputs here.  this should require a PR
+
 inputs:
   who-to-greet:
     description: Who to greet
