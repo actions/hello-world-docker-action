@@ -83,6 +83,9 @@ need to perform some initial setup steps before you can test your action.
 > [Docker](https://www.docker.com/get-started/) handy (e.g. docker engine
 > version 20 or later).
 
+When running the container directly, supply `GITHUB_OUTPUT` with a writable path
+inside the container. GitHub Actions normally provides this file automatically.
+
 1. :hammer_and_wrench: Build the container
 
    Make sure to replace `actions/hello-world-docker-action` with an appropriate
@@ -97,7 +100,10 @@ need to perform some initial setup steps before you can test your action.
    You can pass individual environment variables using the `--env` or `-e` flag.
 
    ```bash
-   $ docker run --env INPUT_WHO_TO_GREET="Mona Lisa Octocat" actions/hello-world-docker-action
+   $ docker run \
+     --env INPUT_WHO_TO_GREET="Mona Lisa Octocat" \
+     --env GITHUB_OUTPUT=/tmp/github_output \
+     actions/hello-world-docker-action
    ::notice file=entrypoint.sh,line=7::Hello, Mona Lisa Octocat!
    ```
 
@@ -105,6 +111,7 @@ need to perform some initial setup steps before you can test your action.
 
    ```bash
    $ echo "INPUT_WHO_TO_GREET=\"Mona Lisa Octocat\"" > ./.env.test
+   $ echo "GITHUB_OUTPUT=/tmp/github_output" >> ./.env.test
 
    $ docker run --env-file ./.env.test actions/hello-world-docker-action
    ::notice file=entrypoint.sh,line=7::Hello, Mona Lisa Octocat!

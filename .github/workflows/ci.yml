@@ -53,6 +53,7 @@ jobs:
         run: |
           docker run \
             --env INPUT_WHO_TO_GREET="${{ env.INPUT_WHO_TO_GREET }}" \
+            --env GITHUB_OUTPUT=/tmp/github_output \
             --rm ${{ env.TEST_TAG }}
 
   test-action:
